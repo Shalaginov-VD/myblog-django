@@ -20,6 +20,6 @@ def post_detail(request, post_id):
             comment.post = post
             comment.save()
             return redirect('post_detail', post_id=post.id)
-        else:
-            form = CommentForm()
-        return render(request, 'blog/post_detail.html', {'post': post, 'comments': comments, 'form': form})
+    else:
+        form = CommentForm()
+    return render(request, 'blog/post_detail.html', {'post': post, 'comments': comments, 'form': form})
