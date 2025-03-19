@@ -11,6 +11,9 @@
 
 {% for post in page_obj %}
     <h2><a href="{% url 'post_detail' post.id %}">{{ post.title }}</a></h2>
+    {% if post.image %}
+        <img src="/media/{{ post.image }}">
+    {% endif %}
     <p>{{ post.content|truncatewords:30 }}</p>
 {% endfor %}
 

@@ -1,4 +1,7 @@
 <h1>{{ post.title }}</h1>
+{% if post.image %}
+    <img src="/media/{{ post.image }}">
+{% endif %}
 <p>{{ post.content }}</p>
 
 <h2>Комментарии</h2>
