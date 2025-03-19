@@ -1,5 +1,11 @@
 <form method="GET">
     <input type="text" name="q" value="{{ query|default:'' }}" placeholder="Поиск">
+    <select name="category">
+        <option value="">Все категории</option>
+        {% for category in categories %}
+            <option value="{{ category.id }}" {% if category.id|stringformat:'s' == request.GET.category %}selected{% endif %}>{{ category.name }}</option>
+        {% endfor %}
+    </select>
     <button type="submit">Найти</button>
 </form>
 
