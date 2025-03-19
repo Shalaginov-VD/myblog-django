@@ -1,3 +1,8 @@
+<form method="GET">
+    <input type="text" name="q" value="{{ query|default:'' }}" placeholder="Поиск">
+    <button type="submit">Найти</button>
+</form>
+
 {% for post in page_obj %}
     <h2><a href="{% url 'post_detail' post.id %}">{{ post.title }}</a></h2>
     <p>{{ post.content|truncatewords:30 }}</p>
