@@ -1,17 +1,27 @@
-<h1>{{ post.title }}</h1>
-{% if post.image %}
-    <img src="/media/{{ post.image }}">
-{% endif %}
-<p>{{ post.content }}</p>
+{% extends 'blog/base.html' %}
 
-<h2>Комментарии</h2>
-{% for comment in comments %}
-    <p><strong>{{ comment.author }}</strong>: {{ comment.content }}</p>
-{% endfor %}
+{% block title %}{{ post.title }}{% endblock %}
 
-<h3>Добавить Комментариий</h3>
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Отправить</button>
-</form>
+{% block body %}
+<div class="post">
+    <h1>{{ post.title }}</h1>
+    {% if post.image %}
+        <img src="/media/{{ post.image }}" alt="{{ post.title }}" class="img-fluid">
+    {% endif %}
+    <p>{{ post.content }}</p>
+
+    <h2>Комментарии</h2>
+    {% for comment in comments %}
+        <div class="comment">
+            <p><strong>{{ comment.author }}</strong>: {{ comment.content }}</p>
+        </div>
+    {% endfor %}
+
+    <h3>Добавить комментарий</h3>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Отправить</button>
+    </form>
+</div>
+{% endblock %}

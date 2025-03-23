@@ -1,27 +1,36 @@
-<form method="GET">
-    <input type="text" name="q" value="{{ query|default:'' }}" placeholder="Поиск">
-    <select name="category">
-        <option value="">Все категории</option>
-        {% for category in categories %}
-            <option value="{{ category.id }}" {% if category.id|stringformat:'s' == request.GET.category %}selected{% endif %}>{{ category.name }}</option>
-        {% endfor %}
-    </select>
-    <button type="submit">Найти</button>
-</form>
+{% extends 'blog/base.html' %}
+
+{% block title %}Список постов{% endblock %}
+
+{% block body %}
+<div class="my-4">
+    <form method="GET" class="form-inline">
+        <input type="text" name="q" value="{{ query|default:'' }}" class="form-control mr-2" placeholder="Поиск">
+        <select name="category" class="form-control mr-2">
+            <option value="">Все категории</option>
+            {% for category in categories %}
+                <option value="{{ category.id }}" {% if category.id|stringformat:'s' == request.GET.category %}selected{% endif %}>{{ category.name }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit" class="btn btn-primary">Найти</button>
+    </form>
+</div>
 
 {% for post in page_obj %}
-    <h2><a href="{% url 'post_detail' post.id %}">{{ post.title }}</a></h2>
-    {% if post.image %}
-        <img src="/media/{{ post.image }}">
-    {% endif %}
-    <p>{{ post.content|truncatewords:30 }}</p>
+    <div class="post mb-4">
+        <h2><a href="{% url 'post_detail' post.id %}">{{ post.title }}</a></h2>
+        {% if post.image %}
+            <img src="/media/{{ post.image }}" alt="{{ post.title }}" class="img-fluid">
+        {% endif %}
+        <p>{{ post.content|truncatewords:30 }}</p>
+    </div>
 {% endfor %}
 
 <div class="pagination">
     <span class="step-links">
         {% if page_obj.has_previous %}
-            <a href="?page=1">&laquo; первый</a>
-            <a href="?page={{ page_obj.previous_page_number }}">« предыдущий</a>
+            <a class="btn btn-link" href="?page=1">&laquo; первый</a>
+            <a class="btn btn-link" href="?page={{ page_obj.previous_page_number }}">« предыдущий</a>
         {% endif %}
 
         <span class="current">
@@ -29,8 +38,9 @@
         </span>
 
         {% if page_obj.has_next %}
-            <a href="?page={{ page_obj.next_page_number }}">следующий »</a>
-            <a href="?page={{ page_obj.paginator.num_pages }}">последний &raquo;</a>
+            <a class="btn btn-link" href="?page={{ page_obj.next_page_number }}">следующий »</a>
+            <a class="btn btn-link" href="?page={{ page_obj.paginator.num_pages }}">последний &raquo;</a>
         {% endif %}
     </span>
 </div>
+{% endblock %}
